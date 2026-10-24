@@ -1,4 +1,5 @@
 import io.restassured.RestAssured;
+import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
@@ -56,5 +57,18 @@ public class HelloWorldTest {
         String secondMessage = responseJSON.get("messages[1].message");
         System.out.println(secondMessage);
 
+    }
+
+    @Test
+    public void printRedirect() {
+        Response response = RestAssured
+                .given()
+                .redirects()
+                .follow(false)
+                .get("https://playground.learnqa.ru/api/long_redirect")
+                .andReturn();
+
+        String LocationHeader = response.getHeader("Location");
+        System.out.println(LocationHeader);
     }
 }

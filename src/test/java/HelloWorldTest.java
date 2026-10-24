@@ -1,12 +1,10 @@
 import io.restassured.RestAssured;
-import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class HelloWorldTest {

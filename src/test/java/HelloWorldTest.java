@@ -1,14 +1,20 @@
+import com.sun.source.tree.AssertTree;
 import io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HelloWorldTest {
 
@@ -17,8 +23,29 @@ public class HelloWorldTest {
         RestAssured.useRelaxedHTTPSValidation();
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"", "Liza", "Somebody"})
+    public void testHello(String name) {
+        Map<String,String> queryParams = new HashMap<>();
+
+        if (name.length() > 0) {
+            queryParams.put("name", name);
+        }
+        JsonPath response = RestAssured
+                .given()
+                .queryParams(queryParams)
+                .get("https://playground.learnqa.ru/api/hello")
+                .jsonPath();
+
+        String answer = response.getString("answer");
+        String expectedName = (name.length() > 0) ? name : "someone";
+
+        assertEquals("Hello, " + expectedName, answer, "Unexpected answer");
+
+    }
+
     @Test
-    public void testRestAssured() {
+    public void testAuth() {
         Map<String,String> data = new HashMap<>();
         data.put("login", "secret_login");
         data.put("password", "secret_pass");

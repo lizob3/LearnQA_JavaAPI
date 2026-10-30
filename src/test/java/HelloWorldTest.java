@@ -210,4 +210,13 @@ public class HelloWorldTest {
         assertTrue(length > 15,
                 "String length should be more than 15 symbols. Current string length is " + length + " symbols");
     }
+
+    @Test
+    public void cookie() {
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/homework_cookie")
+                .andReturn();
+        String hwCookie = response.getCookie("HomeWork");
+        assertEquals("hw_value", hwCookie, "Actual value is not equal to expected value");
+    }
 }

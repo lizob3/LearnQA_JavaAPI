@@ -203,4 +203,11 @@ public class HelloWorldTest {
 
     }
 
+    @Test
+    public void stringLength() {
+        String string = "Hello, world";
+        int length = string.length();
+        assertTrue(length > 15,
+                "String length should be more than 15 symbols. Current string length is " + length + " symbols");
+    }
 }

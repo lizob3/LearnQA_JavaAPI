@@ -212,11 +212,21 @@ public class HelloWorldTest {
     }
 
     @Test
-    public void cookie() {
+    public void hwCookie() {
         Response response = RestAssured
                 .get("https://playground.learnqa.ru/api/homework_cookie")
                 .andReturn();
         String hwCookie = response.getCookie("HomeWork");
         assertEquals("hw_value", hwCookie, "Actual value is not equal to expected value");
+    }
+
+    @Test
+    public void hwHeader() {
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/homework_header")
+                .andReturn();
+
+        String hwHeader = response.getHeader("x-secret-homework-header");
+        assertEquals("Some secret value", hwHeader, "Actual value is not equal to expected value");
     }
 }

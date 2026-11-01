@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class HelloWorldTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "Liza", "Somebody"})
     public void testHello(String name) {
-        Map<String,String> queryParams = new HashMap<>();
+        Map<String, String> queryParams = new HashMap<>();
 
         if (name.length() > 0) {
             queryParams.put("name", name);
@@ -46,7 +47,7 @@ public class HelloWorldTest {
 
     @Test
     public void testAuth() {
-        Map<String,String> data = new HashMap<>();
+        Map<String, String> data = new HashMap<>();
         data.put("login", "secret_login");
         data.put("password", "secret_pass");
 
@@ -60,7 +61,7 @@ public class HelloWorldTest {
 
         String responseCookie = responseForGet.getCookie("auth_cookie");
 
-        Map<String,String> cookies = new HashMap<>();
+        Map<String, String> cookies = new HashMap<>();
         if (responseCookie != null) {
             cookies.put("auth_cookie", responseCookie);
         }
@@ -134,7 +135,7 @@ public class HelloWorldTest {
         String token = responseCreateJob.get("token");
         int seconds = responseCreateJob.get("seconds");
 
-        Map<String,String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("token", token);
 
         //Step 2 - Check status - Job is not ready
@@ -144,9 +145,9 @@ public class HelloWorldTest {
                 .get("https://playground.learnqa.ru/ajax/api/longtime_job")
                 .jsonPath();
 
-            String status = waitForJobCompletion.get("status");
-            System.out.println(status);
-            Thread.sleep(seconds*1000);
+        String status = waitForJobCompletion.get("status");
+        System.out.println(status);
+        Thread.sleep(seconds * 1000);
 
         //Step 3 - Check status - Job is ready
         JsonPath jobIsCompleted = RestAssured
@@ -155,25 +156,25 @@ public class HelloWorldTest {
                 .get("https://playground.learnqa.ru/ajax/api/longtime_job")
                 .jsonPath();
 
-            status = jobIsCompleted.get("status");
-            System.out.println(status);
-            if (status.equals("Job is ready")) {
-                String result = jobIsCompleted.get("result");
-                System.out.println(result);
-            }
+        status = jobIsCompleted.get("status");
+        System.out.println(status);
+        if (status.equals("Job is ready")) {
+            String result = jobIsCompleted.get("result");
+            System.out.println(result);
+        }
 
     }
 
     @Test
     public void findPassword() {
 
-        List<String> passwords = new ArrayList<>(List.of("123456","123456789","qwerty",
-                "password","1234567","12345678","12345","iloveyou","111111","123123","abc123","qwerty123",
-                "1q2w3e4r","admin","qwertyuiop","654321","555555","lovely","7777777","welcome",
-                "888888","princess","dragon","password1","123qwe"));
+        List<String> passwords = new ArrayList<>(List.of("123456", "123456789", "qwerty",
+                "password", "1234567", "12345678", "12345", "iloveyou", "111111", "123123", "abc123", "qwerty123",
+                "1q2w3e4r", "admin", "qwertyuiop", "654321", "555555", "lovely", "7777777", "welcome",
+                "888888", "princess", "dragon", "password1", "123qwe"));
 
-        for (String password:passwords) {
-            Map<String,String> credentials = new HashMap<>();
+        for (String password : passwords) {
+            Map<String, String> credentials = new HashMap<>();
             credentials.put("login", "super_admin");
             credentials.put("password", password);
 
@@ -184,7 +185,7 @@ public class HelloWorldTest {
                     .andReturn();
             String authCookie = getCookie.getCookie("auth_cookie");
 
-            Map<String,String> cookies = new HashMap<>();
+            Map<String, String> cookies = new HashMap<>();
             cookies.put("auth_cookie", authCookie);
 
             Response isAuthorizedResponse = RestAssured
@@ -228,5 +229,31 @@ public class HelloWorldTest {
 
         String hwHeader = response.getHeader("x-secret-homework-header");
         assertEquals("Some secret value", hwHeader, "Actual value is not equal to expected value");
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30', Mobile, No, Android",
+            "'Mozilla/5.0 (iPad; CPU OS 13_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/91.0.4472.77 Mobile/15E148 Safari/604.1', Mobile, Chrome, iOS",
+            "'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', Googlebot, Unknown, Unknown",
+            "'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.100.0', Web, Chrome, No",
+            "'Mozilla/5.0 (iPad; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', Mobile, No, iPhone"
+    })
+    public void hwUserAgent(String userAgent, String expectedPlatform, String expectedBrowser, String expectedDevice) {
+
+        JsonPath response = RestAssured
+                .given()
+                .header("User-Agent", userAgent)
+                .get("https://playground.learnqa.ru/ajax/api/user_agent_check")
+                .jsonPath();
+
+        String actualPlatform = response.get("platform");
+        String actualBrowser = response.get("browser");
+        String actualDevice = response.get("device");
+
+        assertEquals(expectedPlatform + ", " + expectedBrowser + ", " + expectedDevice,
+                actualPlatform + ", " + actualBrowser + ", " + actualDevice,
+                "Actual platform, browser and device are not equal to expected platform, browser and device");
+
     }
 }

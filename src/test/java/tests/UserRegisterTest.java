@@ -5,18 +5,12 @@ import io.restassured.response.Response;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserRegisterTest extends BaseTestCase {
-
-    @BeforeAll
-    static void setUpSsl() {
-        RestAssured.useRelaxedHTTPSValidation();
-    }
 
     @Test
     public void testCreateUserWithExistingEmail () {
@@ -59,7 +53,7 @@ public class UserRegisterTest extends BaseTestCase {
                 .andReturn();
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 200);
-        Assertions.assertJsonHasKey(responseCreateAuth, "id");
+        Assertions.assertJsonHasField(responseCreateAuth, "id");
     }
 
 

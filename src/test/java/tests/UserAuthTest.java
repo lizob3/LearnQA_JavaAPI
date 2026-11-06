@@ -37,13 +37,6 @@ public class UserAuthTest extends BaseTestCase {
         this.userIdOnAuth = this.getIntFromJson(responseGetAuth, "user_id");
     }
 
-    @BeforeAll
-    static void setUpSsl() {
-        RestAssured.useRelaxedHTTPSValidation();
-    }
-
-
-
     @Test
     public void testAuthUser() {
         Response responseCheckAuth = RestAssured

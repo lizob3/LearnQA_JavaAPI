@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: HelloWorldTest
+-------------------------------------------------------------------------------
+Tests run: 17, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 92.6 s <<< FAILURE! - in HelloWorldTest
+hwUserAgent{String, String, String, String}[2]  Time elapsed: 0.576 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Actual platform, browser and device are not equal to expected platform, browser and device ==> expected: <Mobile, Chrome, iOS> but was: <Mobile, No, iOS>
+	at HelloWorldTest.hwUserAgent(HelloWorldTest.java:254)
+
+hwUserAgent{String, String, String, String}[3]  Time elapsed: 1.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Actual platform, browser and device are not equal to expected platform, browser and device ==> expected: <Googlebot, Unknown, Unknown> but was: <Unknown, Unknown, Unknown>
+	at HelloWorldTest.hwUserAgent(HelloWorldTest.java:254)
+
+hwUserAgent{String, String, String, String}[5]  Time elapsed: 0.884 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Actual platform, browser and device are not equal to expected platform, browser and device ==> expected: <Mobile, No, iPhone> but was: <Mobile, No, Unknown>
+	at HelloWorldTest.hwUserAgent(HelloWorldTest.java:254)
+
+stringLength  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: String length should be more than 15 symbols. Current string length is 12 symbols ==> expected: <true> but was: <false>
+	at HelloWorldTest.stringLength(HelloWorldTest.java:211)
+

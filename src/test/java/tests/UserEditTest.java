@@ -58,7 +58,6 @@ public class UserEditTest extends BaseTestCase {
                 .get("https://playground.learnqa.ru/api/user/" + userId)
                 .andReturn();
 
-        System.out.println(responseUserData.asString());
         Assertions.assertJsonByName(responseUserData, "firstName", newName);
     }
 }

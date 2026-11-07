@@ -14,6 +14,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import org.junit.jupiter.api.DisplayName;
+
+
+@Epic("Authorization cases")
+@Feature("Authorizwtion")
 public class UserAuthTest extends BaseTestCase {
 
     String cookie;
@@ -37,6 +45,7 @@ public class UserAuthTest extends BaseTestCase {
         this.userIdOnAuth = this.getIntFromJson(responseGetAuth, "user_id");
     }
 
+    @Description
     @Test
     public void testAuthUser() {
         Response responseCheckAuth = RestAssured

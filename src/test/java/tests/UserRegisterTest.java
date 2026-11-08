@@ -55,10 +55,11 @@ public class UserRegisterTest extends BaseTestCase {
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 200);
         Assertions.assertJsonHasField(responseCreateAuth, "id");
+        System.out.println(responseCreateAuth.asString());
     }
 
     @Description("This test checks error message when trying to register with invalid email")
-    @DisplayName("Test register with invalid email")
+    @DisplayName("Register with invalid email")
     @Test
     public void testCreateUserWithInvalidEmail() {
 
@@ -78,7 +79,7 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Description("This test checks error message when trying to register without necessary field")
-    @DisplayName("Test register without necessary field")
+    @DisplayName("Register without necessary field")
     @ParameterizedTest
     @ValueSource(strings = {"email", "password", "username", "firstName", "lastName"})
     public void testCreateUserWithoutNecessaryField(String field) {
@@ -94,7 +95,7 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Description("This test checks error message when trying to register with 1 symbol username")
-    @DisplayName("Test register with 1 symbol username")
+    @DisplayName("Register with 1 symbol username")
     @Test
     public void testCreateUserWithShortName() {
 
@@ -114,7 +115,7 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Description("This test checks error message when trying to register with more than 250 symbols username")
-    @DisplayName("Test register with more than 250 symbols username")
+    @DisplayName("Register with more than 250 symbols username")
     @Test
     public void testCreateUserWithLongName() {
 

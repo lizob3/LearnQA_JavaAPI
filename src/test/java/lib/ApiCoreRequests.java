@@ -39,11 +39,12 @@ public class ApiCoreRequests {
     }
 
     @Step("Make a POST-request")
-    public Response makePostRequest(String url, Map<String,String> authData) {
+    public Response makePostRequest(String url, Map<String,String> userData) {
         return given()
                 .filter(new AllureRestAssured())
-                .body(authData)
+                .body(userData)
                 .post(url)
                 .andReturn();
     }
+
 }

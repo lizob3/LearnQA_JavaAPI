@@ -22,7 +22,7 @@ import org.junit.jupiter.api.DisplayName;
 
 
 @Epic("Authorization cases")
-@Feature("Authorizwtion")
+@Feature("Authorization")
 public class UserAuthTest extends BaseTestCase {
 
     String cookie;
@@ -61,8 +61,6 @@ public class UserAuthTest extends BaseTestCase {
     @ValueSource(strings = {"cookie", "headers"})
 
     public void testNegativeAuthUser(String condition) {
-        RequestSpecification spec = RestAssured.given();
-        spec.baseUri("https://playground.learnqa.ru/api/user/auth");
 
         if (condition.equals("cookie")) {
             Response responseForCheck = apiCoreRequests

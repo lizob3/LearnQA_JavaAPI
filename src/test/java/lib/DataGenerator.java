@@ -36,4 +36,18 @@ public class DataGenerator {
         return userData;
     }
 
+    public static Map<String,String> getRegistrationDataWithoutNecessaryField(String fieldName) {
+        Map<String,String> defaultValues = DataGenerator.getRegistrationData();
+
+        Map<String,String> userData = new HashMap<>();
+        String[] keys = {"email", "password", "username", "firstName", "lastName"};
+        for (String key : keys) {
+            if (!fieldName.equals(key)) {
+                userData.put(key, defaultValues.get(key));
+            }
+        }
+
+        return userData;
+    }
+
 }

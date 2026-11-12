@@ -1,14 +1,13 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -22,6 +21,10 @@ public class UserDeleteTest extends BaseTestCase {
 
     @Description("This test checks error message when trying to delete user while being non-authorized")
     @DisplayName("Delete user being non-authorized")
+    @Link(name="API docs",  url="https://playground.learnqa.ru/api/map/")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("smoke")
+    @Owner("Liza")
     @Test
     public void testDeleteUserUnauthorized() {
         Response responseDeleteUser = apiCoreRequests.makeDeleteRequestNoAuth("/user/2");
@@ -32,6 +35,10 @@ public class UserDeleteTest extends BaseTestCase {
 
     @Description("This test successfully delete authorized user")
     @DisplayName("Delete user")
+    @Link(name="API docs",  url="https://playground.learnqa.ru/api/map/")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("smoke")
+    @Owner("Liza")
     @Test
     public void testDeleteUser() {
         //GENERATE USER
@@ -74,6 +81,11 @@ public class UserDeleteTest extends BaseTestCase {
 
     @Description("This test checks error message when trying to delete user while being authorized as another user")
     @DisplayName("Delete another user")
+    @Link(name="API docs",  url="https://playground.learnqa.ru/api/map/")
+    @Severity(SeverityLevel.CRITICAL)
+    @Tag("smoke")
+    @Issue("ID-123")
+    @Owner("Liza")
     @Test
     public void testDeleteAnotherUser() {
         //GENERATE USER

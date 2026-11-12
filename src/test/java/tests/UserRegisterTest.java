@@ -21,7 +21,7 @@ import java.util.Map;
 @Feature("Registration")
 public class UserRegisterTest extends BaseTestCase {
 
-    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api");
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api_dev");
 
     @Test
     public void testCreateUserWithExistingEmail () {
@@ -35,7 +35,7 @@ public class UserRegisterTest extends BaseTestCase {
         Response responseCreateAuth = RestAssured
                 .given()
                 .body(userData)
-                .post("https://playground.learnqa.ru/api/user/")
+                .post("https://playground.learnqa.ru/api_dev/user/")
                 .andReturn();
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
@@ -50,7 +50,7 @@ public class UserRegisterTest extends BaseTestCase {
         Response responseCreateAuth = RestAssured
                 .given()
                 .body(userData)
-                .post("https://playground.learnqa.ru/api/user/")
+                .post("https://playground.learnqa.ru/api_dev/user/")
                 .andReturn();
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 200);

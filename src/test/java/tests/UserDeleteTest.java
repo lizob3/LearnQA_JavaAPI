@@ -18,7 +18,7 @@ import java.util.Map;
 @Feature("Delete user")
 public class UserDeleteTest extends BaseTestCase {
 
-    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api");
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api_dev");
 
     @Description("This test checks error message when trying to delete user while being non-authorized")
     @DisplayName("Delete user being non-authorized")

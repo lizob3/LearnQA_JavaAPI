@@ -28,7 +28,7 @@ public class UserAuthTest extends BaseTestCase {
     String cookie;
     String header;
     int userIdOnAuth;
-    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api");
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api_dev");
 
     @BeforeEach
     public void loginUser() {

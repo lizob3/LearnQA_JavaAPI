@@ -19,7 +19,7 @@ import java.util.Map;
 @Feature("Get user details")
 public class UserGetTest extends BaseTestCase {
 
-    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api");
 
     @Test
     public void testGetUserDataNotAuth() {
@@ -69,14 +69,14 @@ public class UserGetTest extends BaseTestCase {
         authData.put("password", "1234");
 
         Response responseGetAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/login",
+                "/user/login",
                 authData);
 
         String header = this.getHeader(responseGetAuth, "x-csrf-token");
         String cookie = this.getCookie(responseGetAuth, "auth_sid");
 
         Response responseUserData = apiCoreRequests.makeGetRequest(
-                "https://playground.learnqa.ru/api/user/2",
+                "/user/2",
                 header,
                 cookie);
 

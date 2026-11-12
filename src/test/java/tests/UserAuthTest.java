@@ -28,7 +28,7 @@ public class UserAuthTest extends BaseTestCase {
     String cookie;
     String header;
     int userIdOnAuth;
-    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api");
 
     @BeforeEach
     public void loginUser() {
@@ -36,7 +36,7 @@ public class UserAuthTest extends BaseTestCase {
         authData.put("email", "vinkotov@example.com");
         authData.put("password", "1234");
 
-        Response responseGetAuth = apiCoreRequests.makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+        Response responseGetAuth = apiCoreRequests.makePostRequest("/user/login", authData);
 
         this.cookie = this.getCookie(responseGetAuth, "auth_sid");
         this.header = this.getHeader(responseGetAuth, "x-csrf-token");
@@ -48,7 +48,7 @@ public class UserAuthTest extends BaseTestCase {
     @Test
     public void testAuthUser() {
         Response responseCheckAuth = apiCoreRequests.makeGetRequest(
-                "https://playground.learnqa.ru/api/user/auth",
+                "/user/auth",
                     this.header,
                     this.cookie);
 
@@ -64,11 +64,11 @@ public class UserAuthTest extends BaseTestCase {
 
         if (condition.equals("cookie")) {
             Response responseForCheck = apiCoreRequests
-                    .makeGetRequestWithCookie("https://playground.learnqa.ru/api/user/auth", this.cookie);
+                    .makeGetRequestWithCookie("/user/auth", this.cookie);
             Assertions.assertJsonByName(responseForCheck, "user_id", 0);
         } else if (condition.equals("headers")) {
             Response responseForCheck = apiCoreRequests
-                    .makeGetRequestWithToken("https://playground.learnqa.ru/api/user/auth", this.header);
+                    .makeGetRequestWithToken("/user/auth", this.header);
             Assertions.assertJsonByName(responseForCheck, "user_id", 0);
         } else {
             throw new IllegalArgumentException("Condition value is known: " + condition);

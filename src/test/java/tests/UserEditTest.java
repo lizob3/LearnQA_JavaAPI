@@ -20,7 +20,7 @@ import java.util.Map;
 @Feature("Edit user details")
 public class UserEditTest extends BaseTestCase {
 
-    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api");
 
     @Test
     public void testEditJustCreatedTest() {
@@ -78,7 +78,7 @@ public class UserEditTest extends BaseTestCase {
         Map<String,String> editData = new HashMap<>();
         editData.put("firstName", newName);
 
-        Response responseEditUser = apiCoreRequests.makePutRequestNoAuth("https://playground.learnqa.ru/api/user/2", editData);
+        Response responseEditUser = apiCoreRequests.makePutRequestNoAuth("/user/2", editData);
 
         Assertions.assertResponseCodeEquals(responseEditUser, 400);
         Assertions.assertJsonByName(responseEditUser, "error", "Auth token not supplied");
@@ -93,7 +93,7 @@ public class UserEditTest extends BaseTestCase {
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
         String userId = responseCreateAuth.jsonPath().getString("id");
@@ -103,7 +103,7 @@ public class UserEditTest extends BaseTestCase {
         authData.put("email", userData.get("email"));
         authData.put("password", userData.get("password"));
 
-        Response responseGetAuth = apiCoreRequests.makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+        Response responseGetAuth = apiCoreRequests.makePostRequest("/user/login", authData);
 
         //EDIT
         String newName = "Changed Name";
@@ -111,7 +111,7 @@ public class UserEditTest extends BaseTestCase {
         editData.put("firstName", newName);
 
         Response responseEditUser = apiCoreRequests.makePutRequest(
-                "https://playground.learnqa.ru/api/user/167587",
+                "/user/167587",
                 editData,
                 this.getHeader(responseGetAuth, "x-csrf-token"),
                 this.getCookie(responseGetAuth, "auth_sid"));
@@ -129,7 +129,7 @@ public class UserEditTest extends BaseTestCase {
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
         String userId = responseCreateAuth.jsonPath().getString("id");
@@ -140,7 +140,7 @@ public class UserEditTest extends BaseTestCase {
         authData.put("email", email);
         authData.put("password", userData.get("password"));
 
-        Response responseGetAuth = apiCoreRequests.makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+        Response responseGetAuth = apiCoreRequests.makePostRequest("/user/login", authData);
 
         //EDIT
         String newEmail = email.replace("@", "");
@@ -148,7 +148,7 @@ public class UserEditTest extends BaseTestCase {
         editData.put("email", newEmail);
 
         Response responseEditUser = apiCoreRequests.makePutRequest(
-                "https://playground.learnqa.ru/api/user/"+userId,
+                "/user/"+userId,
                 editData,
                 this.getHeader(responseGetAuth, "x-csrf-token"),
                 this.getCookie(responseGetAuth, "auth_sid"));
@@ -166,7 +166,7 @@ public class UserEditTest extends BaseTestCase {
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
         String userId = responseCreateAuth.jsonPath().getString("id");
@@ -176,7 +176,7 @@ public class UserEditTest extends BaseTestCase {
         authData.put("email", userData.get("email"));
         authData.put("password", userData.get("password"));
 
-        Response responseGetAuth = apiCoreRequests.makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+        Response responseGetAuth = apiCoreRequests.makePostRequest("/user/login", authData);
 
         //EDIT
         String newFirstName = "a";
@@ -184,7 +184,7 @@ public class UserEditTest extends BaseTestCase {
         editData.put("firstName", newFirstName);
 
         Response responseEditUser = apiCoreRequests.makePutRequest(
-                "https://playground.learnqa.ru/api/user/"+userId,
+                "/user/"+userId,
                 editData,
                 this.getHeader(responseGetAuth, "x-csrf-token"),
                 this.getCookie(responseGetAuth, "auth_sid"));

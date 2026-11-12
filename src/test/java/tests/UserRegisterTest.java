@@ -21,7 +21,7 @@ import java.util.Map;
 @Feature("Registration")
 public class UserRegisterTest extends BaseTestCase {
 
-    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api");
 
     @Test
     public void testCreateUserWithExistingEmail () {
@@ -70,7 +70,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData = DataGenerator.getRegistrationData(userData);
 
         Response resposeCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
 
@@ -86,7 +86,7 @@ public class UserRegisterTest extends BaseTestCase {
 
         Map<String,String> userData = DataGenerator.getRegistrationDataWithoutNecessaryField(field);
         Response resposeCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
 
@@ -106,7 +106,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData = DataGenerator.getRegistrationData(userData);
 
         Response resposeCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
 
@@ -126,7 +126,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData = DataGenerator.getRegistrationData(userData);
 
         Response resposeCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
 

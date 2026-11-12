@@ -18,13 +18,13 @@ import java.util.Map;
 @Feature("Delete user")
 public class UserDeleteTest extends BaseTestCase {
 
-    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests("https://playground.learnqa.ru/api");
 
     @Description("This test checks error message when trying to delete user while being non-authorized")
     @DisplayName("Delete user being non-authorized")
     @Test
     public void testDeleteUserUnauthorized() {
-        Response responseDeleteUser = apiCoreRequests.makeDeleteRequestNoAuth("https://playground.learnqa.ru/api/user/2");
+        Response responseDeleteUser = apiCoreRequests.makeDeleteRequestNoAuth("/user/2");
 
         Assertions.assertResponseCodeEquals(responseDeleteUser, 400);
         Assertions.assertJsonByName(responseDeleteUser, "error", "Auth token not supplied");
@@ -38,7 +38,7 @@ public class UserDeleteTest extends BaseTestCase {
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
         String userId = responseCreateAuth.jsonPath().getString("id");
@@ -48,13 +48,13 @@ public class UserDeleteTest extends BaseTestCase {
         authData.put("email", userData.get("email"));
         authData.put("password", userData.get("password"));
 
-        Response responseGetAuth = apiCoreRequests.makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+        Response responseGetAuth = apiCoreRequests.makePostRequest("/user/login", authData);
         String header = this.getHeader(responseGetAuth, "x-csrf-token");
         String cookie = this.getCookie(responseGetAuth, "auth_sid");
 
         //DELETE
         Response responseDeleteUser = apiCoreRequests.makeDeleteRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 header,
                 cookie,
                 userId);
@@ -64,7 +64,7 @@ public class UserDeleteTest extends BaseTestCase {
 
         //GET DATA
         Response responseUserData = apiCoreRequests.makeGetRequest(
-                "https://playground.learnqa.ru/api/user/"+userId,
+                "/user/"+userId,
                 header,
                 cookie);
 
@@ -80,7 +80,7 @@ public class UserDeleteTest extends BaseTestCase {
         Map<String,String> userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 userData
         );
         String userId = responseCreateAuth.jsonPath().getString("id");
@@ -90,13 +90,13 @@ public class UserDeleteTest extends BaseTestCase {
         authData.put("email", userData.get("email"));
         authData.put("password", userData.get("password"));
 
-        Response responseGetAuth = apiCoreRequests.makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+        Response responseGetAuth = apiCoreRequests.makePostRequest("/user/login", authData);
         String header = this.getHeader(responseGetAuth, "x-csrf-token");
         String cookie = this.getCookie(responseGetAuth, "auth_sid");
 
         //DELETE
         Response responseDeleteUser = apiCoreRequests.makeDeleteRequest(
-                "https://playground.learnqa.ru/api/user/",
+                "/user/",
                 header,
                 cookie,
                 "167587");
